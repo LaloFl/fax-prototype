@@ -3,6 +3,9 @@ package fax.fax_prototype.apiservice;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import fax.fax_prototype.apiservice.dailysummary.GetDailySummaryController;
+import fax.fax_prototype.apiservice.dailysummary.GetDailySummaryRequest;
+import fax.fax_prototype.apiservice.dailysummary.GetDailySummaryResponse;
 import fax.fax_prototype.apiservice.getfaxes.GetFaxesController;
 import fax.fax_prototype.apiservice.getfaxes.GetFaxesRequest;
 import fax.fax_prototype.apiservice.getfaxes.GetFaxesResponse;
@@ -29,6 +32,8 @@ public class ApiRouter {
     private SendFaxController sendFaxController;
     @Autowired
     private GetFaxesController getFaxesController;
+    @Autowired
+    private GetDailySummaryController getDailySummaryController;
 
     @GetMapping("/health")
     public @ResponseBody GetHealthResponse getHealth() {
@@ -41,8 +46,9 @@ public class ApiRouter {
     }
 
     @GetMapping("/dailysummary")
-    public String getDailySummary(@RequestParam String param) {
-        return new String();
+    public @ResponseBody GetDailySummaryResponse getDailySummary(
+            @RequestParam(required = false) GetDailySummaryRequest request) {
+        return getDailySummaryController.getDailySummary();
     }
 
     @PostMapping("/sendfax")
