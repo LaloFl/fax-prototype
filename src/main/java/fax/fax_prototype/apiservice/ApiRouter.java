@@ -17,6 +17,8 @@ import fax.fax_prototype.apiservice.sendfax.SendFaxResponse;
 import fax.fax_prototype.apiservice.sendfaxfromfile.SendFaxFromFileController;
 import fax.fax_prototype.apiservice.sendfaxfromfile.SendFaxFromFileRequest;
 import fax.fax_prototype.apiservice.sendfaxfromfile.SendFaxFromFileResponse;
+import fax.fax_prototype.apiservice.txtsendfax.TxtSendFileController;
+import fax.fax_prototype.apiservice.txtsendfax.TxtSendFileResponse;
 
 import java.io.InputStream;
 
@@ -38,6 +40,8 @@ public class ApiRouter {
     private SendFaxController sendFaxController;
     @Autowired
     private SendFaxFromFileController sendFaxFromFileController;
+    @Autowired
+    private TxtSendFileController txtSendFileController;
     @Autowired
     private GetFaxesController getFaxesController;
     @Autowired
@@ -70,10 +74,8 @@ public class ApiRouter {
     }
 
     @PostMapping("/YYsendfax")
-    public String postTxtSendFax(@RequestBody String entity) {
-        // TODO: process POST request
-
-        return entity;
+    public @ResponseBody TxtSendFileResponse postTxtSendFax(InputStream inputStream) {
+        return txtSendFileController.sendFax(inputStream);
     }
 
 }
