@@ -14,8 +14,14 @@ import fax.fax_prototype.apiservice.health.GetHealthResponse;
 import fax.fax_prototype.apiservice.sendfax.SendFaxController;
 import fax.fax_prototype.apiservice.sendfax.SendFaxRequest;
 import fax.fax_prototype.apiservice.sendfax.SendFaxResponse;
+import fax.fax_prototype.apiservice.sendfaxfromfile.SendFaxFromFileController;
+import fax.fax_prototype.apiservice.sendfaxfromfile.SendFaxFromFileRequest;
+import fax.fax_prototype.apiservice.sendfaxfromfile.SendFaxFromFileResponse;
+
+import java.io.InputStream;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -30,6 +36,8 @@ public class ApiRouter {
     private GetHealthController getHealthController;
     @Autowired
     private SendFaxController sendFaxController;
+    @Autowired
+    private SendFaxFromFileController sendFaxFromFileController;
     @Autowired
     private GetFaxesController getFaxesController;
     @Autowired
@@ -56,14 +64,12 @@ public class ApiRouter {
         return sendFaxController.sendFax(request);
     }
 
-    @PostMapping("/sendfaxfromfile")
-    public String postSendFaxFromFile(@RequestBody String entity) {
-        // TODO: process POST request
-
-        return entity;
+    @PostMapping(value = "/sendfaxfromfile", consumes = { MediaType.APPLICATION_XML_VALUE, MediaType.TEXT_XML_VALUE })
+    public @ResponseBody SendFaxFromFileResponse postSendFaxFromFile(@RequestBody SendFaxFromFileRequest request) {
+        return sendFaxFromFileController.sendFaxFromFile(request);
     }
 
-    @PostMapping("/txtsendfax")
+    @PostMapping("/YYsendfax")
     public String postTxtSendFax(@RequestBody String entity) {
         // TODO: process POST request
 
